@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>seealltask</title>
+    <style>
+        .tablePanel{
+            width:80%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<div class="tab-pane tablePanel" >
+    <table id="table_plan"></table>
+</div>
+<script type="text/javascript" src="/static/crawl/plan/seealltask.js"></script>
+<script type="text/javascript">
+    $(function(){
+        var oTablePlan = new TablePlan();
+        oTablePlan.Init();
+    });
+</script>
+</body>
+</html>

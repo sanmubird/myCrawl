@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>addElement</title>
+    <style>
+        .form-control {
+            height: 35px;
+        }
+
+        .form-control-feedback{
+            right: 25px;
+        }
+
+        .glyphicon-ok{
+            color:green;
+        }
+        .glyphicon-remove{
+            color:#A94442;
+        }
+
+    </style>
+</head>
+<body>
+<div role="element" >
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form class="form-horizontal"  action="/crawl/element/saveElement"  role="element">
+                <fieldset>
+                    <div class="control-group" style="margin-top: 25px;">
+                        <!-- Text input-->
+                        <label class="col-sm-2 control-label">目标名称</label>
+                        <div class="col-sm-10">
+                            <input role="elementname" name="elementname" type="text" placeholder="请输入抓取目标名称(例如:标题)" class="form-control"/>
+                            <input role="planid4element"  name="planid" type="hidden" />
+                            <input role="elementid"  name="elementid" type="hidden" />
+                        </div>
+                    </div>
+
+                    <div class="control-group" style="margin-top: 75px;">
+                        <!-- Text input-->
+                        <label class="col-sm-2 control-label">英文代码</label>
+                        <div class="col-sm-10">
+                            <input role="elementcode" name="elementcode" type="text" placeholder="请输入抓取目标英文代码(例如:title)" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="control-group" style="margin-top: 125px;">
+                        <!-- Textarea -->
+                        <label class="col-sm-2 control-label">目标描述</label>
+                        <div class="col-sm-10">
+                            <div class="textarea">
+                                <textarea name="elementdesc" role="elementdesc" class="form-control"> </textarea>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="control-group" style="margin-top: 195px;">
+                        <!-- Text input-->
+                        <label class="col-sm-2 control-label">目标抓取规则</label>
+                        <div class="col-sm-10">
+                            <input role="target" name="target" type="text" placeholder="请输入目标抓取规则" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="control-group" style="margin-top: 245px;">
+                        <!-- Text input-->
+                        <label class="col-sm-2 control-label">抓取天数</label>
+                        <div class="col-sm-10">
+                            <input role="lastestdays" name="lastestdays" type="text" placeholder="请输入抓取天数(提示:只有当前目标英文代码以time结尾时,抓取天数才有效.),爬取天数可以为空或0" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="control-group" style="margin-top: 315px;">
+                        <!-- Text input-->
+                        <label class="col-sm-2 control-label">测试url地址</label>
+                        <div class="col-sm-10">
+                            <input role="testurl" name="testurl" type="text" placeholder="请输入测试url地址(提示:在输入测试地址,点击测试按钮,可以获得当前抓取规则抓取到的内容.)" class="form-control"/>
+                        </div>
+                    </div>
+                </fieldset>
+                <div style="margin-top:20px;">
+                    <button id="submitBtn4element" class="btn btn-success" onclick="saveElement()"  style="display: inline-block;margin-left: 22%;" type="button" >保  存</button>
+                    <button class="btn" style="display: inline-block;margin-left: 25%;margin-top: 2px;"  type="button" onclick="testElement()"  >测  试</button>
+                    <a class="btn btn-link" style="display: inline-block;margin-left: 82%;margin-top: -56px;"   href="/crawl/step/easytour" target="_blank"  >教  程</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("input[role = 'planid4element']").val(  $("#planid").val() );
+        if(elementid != ""){
+            setupElementForm(elementid);
+        }
+        $("form[role='element']").bootstrapValidator({
+            /**
+             * 为每个字段指定通用错误提示语
+             */
+            message: '当前值验证不通过!',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                elementdesc: {
+                    validators: {
+                        notEmpty: {
+                            message: '爬取起始地址描述不能为空!'
+                        }
+                    }
+                }
+                ,elementname: {
+                    validators: {
+                        notEmpty: {
+                            message: '目标名称不能为空!'
+                        },
+                        stringLength: {
+                            min: 3,
+                            max: 30,
+                            message: '目标名称的长度在3-30字之间!'
+                        },
+                        regexp: {
+                            regexp: /^([a-zA-Z0-9_]|[\u4e00-\u9fa5])+$/,
+                            message: '目标名称只能有字母,汉字,数字和下划线组成!'
+                        }
+                    }
+                }
+                ,elementcode: {
+                    validators: {
+                        notEmpty: {
+                            message: '英文名称不能为空!'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 60,
+                            message: '英文名称的长度在6-60字之间!'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9_]+$/,
+                            message: '英文名称只能有字母,数字和下划线组成!'
+                        }
+                    }
+                }
+                ,target: {
+                    validators: {
+                        notEmpty: {
+                            message: '抓取规则不能为空!'
+                        }
+                    }
+                }
+                ,lastestdays: {
+                    validators: {
+                        lessThan: {
+                            value: 365,
+                            inclusive: true,
+                            message: '抓取天数一般小于365,如有特殊需求,请联系管理员!'
+                        },
+                        greaterThan: {
+                            value: 0,
+                            inclusive: false,
+                            message: '抓取天数只能为正数.'
+                        }
+                    }
+                }
+                ,testurl: {
+                    validators: {
+                        notEmpty: {
+                            message: '测试地址不能为空!'
+                        },
+                        uri: {
+                            allowLocal: true,
+                            message: '请输入正确的url地址!'
+                        }
+                    }
+                }
+            },
+            /**
+             *  指定不验证的情况
+             *  值可设置为以下三种类型：
+             *  1、String  ':disabled, :hidden, :not(:visible)'
+             *  2、Array  默认值  [':disabled', ':hidden', ':not(:visible)']
+             *  3、带回调函数
+             [':disabled', ':hidden', function($field, validator) {
+             $field 当前验证字段dom节点
+             validator 验证实例对象
+             可以再次自定义不要验证的规则
+             必须要return，return true or false;
+            return !$field.is(':visible');
+            }]
+             */
+            excluded: [':disabled', ':hidden', ':not(:visible)'],
+            /**
+             * 指定提交的按钮，例如：'.submitBtn' '#submitBtn'
+             * 当表单验证不通过时，该按钮为disabled
+             */
+           /* submitButtons: '#submitBtn4element',*/
+            /**
+             * 生效规则（三选一）
+             * enabled 字段值有变化就触发验证
+             * disabled,submitted 当点击提交时验证并展示错误信息
+             */
+            live: 'enabled'
+            /**
+             * submitHandler: function(validator, form, submitButton) {
+            *   validator: 表单验证实例对象
+            *   form  jq对象  指定表单对象
+            *   指定表单对象submitButton  jq对象  指定提交按钮的对象
+            * }
+             * 在ajax提交表单时很实用
+             *   submitHandler: function(validator, form, submitButton) {
+                实用ajax提交表单
+                $.post(form.attr('action'), form.serialize(), function(result) {
+                   自定义回调逻辑
+                }, 'json');
+            }
+             *
+             */
+        });
+    });
+
+    function saveElement() {
+        /*获取表单对象*/
+        var bootstrapValidator = $("form[role='element']").data('bootstrapValidator');
+        /*手动触发验证*/
+        bootstrapValidator.validate();
+        if(bootstrapValidator.isValid()){
+           /* 表单提交的方法、比如ajax提交*/
+            $.post($("form[role='element']").attr('action'), $("form[role='element']").serialize(), function(result) {
+                if(result.isSaved == "ok"){
+                    $.scojs_message('保存爬取起始地址成功!', $.scojs_message.TYPE_OK);
+                }else{
+                    $.scojs_message('保存爬取起始地址失败!', $.scojs_message.TYPE_ERROR);
+                }
+            }, 'json');
+        }
+    }
+
+    function testElement(){
+        /*获取表单对象*/
+        var bootstrapValidator = $("form[role='element']").data('bootstrapValidator');
+        /*手动触发验证*/
+        bootstrapValidator.validate();
+        if(bootstrapValidator.isValid()){
+            /* 表单提交的方法、比如ajax提交*/
+            $.get('/crawl/element/testElement', $("form[role='element']").serialize(), function(result) {
+                $.scojs_message(result.crawlresult, $.scojs_message.TYPE_OK);
+            }, 'json');
+        }
+    }
+
+    function setupElementForm(elementid) {
+        $.ajax({
+            url:'/crawl/element/getElementById?elementid='+elementid,
+            async:false,
+            success:function(data){
+                $("input[role='elementid']").val(data.elementid);
+                $("textarea[role='elementdesc']").val(data.elementdesc);
+                $("input[role='elementname']").val(data.elementname);
+                $("input[role='elementcode']").val(data.elementcode);
+                $("input[role='target']").val(data.target);
+                $("input[role='lastestdays']").val(data.lastestdays);
+                $("input[role='testurl']").val(data.testurl);
+            }
+        });
+    }
+</script>
+</body>
+
+</html>

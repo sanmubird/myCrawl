@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>注册三目鸟网站</title>
+    <script type="text/javascript" src="/static/common/boot/boot.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+            height: 100%;
+            background-color: #f1f1f1;
+        }
+
+        .sign {
+            height: 100%;
+            min-height: 750px;
+            text-align: center;
+            font-size: 14px;
+            background-color: #f1f1f1;
+        }
+
+        .sign .logo {
+            position: absolute;
+            top: 56px;
+            margin-left: 50px;
+        }
+
+        .sign .main {
+            width: 550px;
+            margin-top: 180px;
+            margin-left: 20px;
+            padding: 50px 50px 70px;
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, .1);
+            vertical-align: middle;
+            display: inline-block;
+        }
+
+        .main .title {
+            margin: 40px auto 50px;
+        }
+
+        h2 {
+            letter-spacing: 5px;
+        }
+
+        a {
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .title a:hover {
+            padding-bottom: 3px;
+            border-bottom: 3px solid #ea6f5a;
+        }
+
+        .active {
+            color: #ea6f5a;
+            padding-bottom: 3px;
+            border-bottom: 3px solid #ea6f5a;
+            font-weight: 700;
+        }
+
+        form {
+            margin: 10px auto 40px;
+            width: 400px;
+            height: 400px;
+        }
+
+        .input-group,
+        .form-control {
+            height: 55px;
+        }
+
+        .sign .sign-in-button {
+            background: #3194d0;
+        }
+
+        .sign .sign-in-button,
+        .sign .sign-up-button {
+            margin-top: 60px;
+            width: 100%;
+            padding: 9px 18px;
+            font-size: 18px;
+            border: none;
+            border-radius: 25px;
+            color: #fff;
+            background: #42c02e;
+            cursor: pointer;
+            outline: none;
+            display: block;
+            clear: both;
+        }
+
+        .verifycode {
+            position: absolute;
+            top: 7px;
+            right: 3px;
+            z-index: 1000;
+        }
+
+        .alert {
+            position: absolute;
+            float: right;
+            top: 5px;
+            right: -220px;
+            height: 39px;
+            padding: 5px;
+            display: none;
+        }
+
+        .ok{
+            position: absolute;
+            float: right;
+            top: 10px;
+            right: -50px;
+            height: 39px;
+            padding: 5px;
+            display: none;
+        }
+
+        .content{
+            position: absolute;
+            margin-left: 80px;
+            margin-top: 150px;
+            text-align:left;
+            font-size: 24px;
+            color: black ;
+        }
+    </style>
+</head>
+
+<body>
+<div class="sign">
+    <div class="content">
+        <br/>
+        <br/>
+        <h1>假如生活欺骗了你</h1>
+        <h2>（俄）普希金</h2>
+        <br/>
+        <p>不要悲伤 不要心急</p>
+        <p>忧郁的日子里须要镇静</p>
+        <p>相信吧 快乐的日子将会来临</p>
+        <p>心儿永远向往着未来</p>
+        <p>现在却常是忧郁</p>
+        <p>一切都是瞬息</p>
+        <p> 一切都将会过去</p>
+        <p>而那过去了的</p>
+        <p> 就会成为亲切的回忆</p>
+        <br/>
+    </div>
+    <div class="logo">
+        <a href="/"><img src="/static/img/smb.png" alt="Logo" /></a>
+    </div>
+    <div class="main">
+        <h2 class="title">
+            <div class="normal-title">
+                <a  href="/user/sign_in">登录</a>
+                <b>·</b>
+                <a class="active"  href="/user/sign_up">注册</a>
+            </div>
+        </h2>
+        <div>
+            <form id="userRegisterForm" >
+                <!-- 正常登录登录名输入框 -->
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
+                    <input name="username" type="text" class="form-control" placeholder="你的昵称" onBlur="verifyUsername()" />
+                    <div class="alert alert-danger" isnull="0" role="username">注意: 用户名不能为空!</div>
+                    <span class="ok" role="username" ><i class="fa fa-check-circle" style="color:green;" aria-hidden="true"></i></span>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                    <input name="email" type="text" class="form-control" placeholder="邮箱" onBlur="verifyEmail()" />
+                    <div class="alert alert-danger" isnull="0" role="email">注意: 邮箱不能为空!</div>
+                    <span class="ok" role="email" ><i class="fa fa-check-circle" style="color:green;" aria-hidden="true"></i></span>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-phone" aria-hidden="true"></i></span>
+                    <input name="phone" type="text" class="form-control" placeholder="手机号" onBlur="verifyPhone()" />
+                    <div class="alert alert-danger" isnull="0" role="phone">注意: 手机号不能为空!</div>
+                    <span class="ok" role="phone" ><i class="fa fa-check-circle" style="color:green;" aria-hidden="true"></i></span>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-shield" aria-hidden="true"></i></span>
+                    <input name="code" type="text"  class="form-control" placeholder="验证码" onBlur="verifyCode()" />
+                    <span class="verifycode"><button type="button" onclick="getVerifyCode()" disabled="disabled" class="btn btn-success">发送验证码</button></span>
+                    <div class="alert alert-danger" isnull="0" role="code">注意: 验证码不能为空!</div>
+                    <span class="ok" role="code" ><i class="fa fa-check-circle" style="color:green;" aria-hidden="true"></i></span>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock" aria-hidden="true"></i></span>
+                    <input name="password" type="password" class="form-control" placeholder="密码" onBlur="verifyPassword()" />
+                    <div class="alert alert-danger" isnull="0" role="password">注意: 密码不能为空!</div>
+                    <span class="ok" role="password" ><i class="fa fa-check-circle" style="color:green;" aria-hidden="true"></i></span>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock" aria-hidden="true"></i></span>
+                    <input name="passwordrepeat" type="password" class="form-control" placeholder="确认密码" onBlur="verifyPasswordrepeat()" />
+                    <div class="alert alert-danger" isnull="0" role="passwordrepeat">注意: 确认密码不能为空!</div>
+                    <span class="ok" role="passwordrepeat" ><i class="fa fa-check-circle" style="color:green;" aria-hidden="true"></i></span>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-phone" aria-hidden="true"></i></span>
+                    <input name="inviterphone" type="text" class="form-control" placeholder="邀请人手机号" onBlur="verifyInviterPhone()" />
+                    <div class="alert alert-danger" isnull="0" role="inviterphone">邀请人手机号不能为空!</div>
+                    <span class="ok" role="inviterphone" ><i class="fa fa-check-circle" style="color:green;" aria-hidden="true"></i></span>
+                </div>
+                <input type="button" name="confirm" onclick="register()" value="注册" class="sign-in-button" data-disable-with="注册" />
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="/static/user/js/signup.js"></script>
+<script type="text/javascript">
+
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>step1</title>
+    <style>
+        .panelform{
+            width:80%;
+            height: 460px;
+            margin: 0 auto;
+        }
+        .form-control {
+            height: 35px;
+        }
+
+        .form-control-feedback{
+            right: 25px;
+        }
+
+        .glyphicon-ok{
+            color:green;
+        }
+        .glyphicon-remove{
+            color:#A94442;
+        }
+    </style>
+</head>
+<body>
+<div  class="panelform" >
+    <form class="form-horizontal" isSaved="0" role="step1">
+        <fieldset>
+            <div >
+                <legend class="">设定爬取方案</legend>
+            </div>
+
+            <div class="control-group" style="margin-top: 25px;">
+                <!-- Text input-->
+                <label class="col-sm-2 control-label" >方案名称</label>
+                <div class="col-sm-10">
+                    <input name="planname" role="planname" type="text" placeholder="请输入方案名称" class="form-control" />
+                    <input name="planid"  role="planid"  type="hidden" />
+                </div>
+            </div>
+
+            <div class="control-group"  style="margin-top: 75px;">
+                <!-- Textarea -->
+                <label class="col-sm-2 control-label" >方案描述</label>
+                <div class="col-sm-10">
+                    <div class="textarea">
+                        <textarea name="plandesc"  role="plandesc"  class="form-control" > </textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group"  style="margin-top: 145px;">
+                <!-- Text input-->
+                <label class="col-sm-2 control-label" >爬取深度</label>
+                <div class="col-sm-10">
+                    <input name="deptnumber"  role="deptnumber"   type="text" placeholder="爬取深度  请填写2 ~ 5之间的数字" class="form-control" />
+                </div>
+            </div>
+
+            <div class="control-group" style="margin-top: 195px;">
+                <!-- Text input-->
+                <label class="col-sm-2 control-label" >每层最大爬取量</label>
+                <div class="col-sm-10">
+                    <input name="topn" role="topn"  type="text" placeholder="建议不要超过10万" class="form-control" />
+                </div>
+            </div>
+
+            <div class="control-group"  style="margin-top: 245px;">
+                <!-- Select Basic -->
+                <label class="col-sm-2 control-label" >是否断点爬取</label>
+                <div class="col-sm-10">
+                    <select name="isresumable" role="isresumable"  class="form-control">
+                        <option value="" >断点爬取的概念类似于断点下载</option>
+                        <option value="1" >是 (之前爬取过的,将不再进行爬取)</option>
+                        <option value="0" >否 (之前爬取过的,需要再次爬取)</option>
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        var planid = $("#planid").val();
+        if(planid != ""){
+            setupPlanForm(planid);
+        }
+
+
+        $("form[role='step1']").bootstrapValidator({
+            message: '当前值验证不通过!',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                planname: {
+                    validators: {
+                        notEmpty: {
+                            message: '方案名称不能为空!'
+                        },
+                        stringLength: {
+                            min: 3,
+                            max: 30,
+                            message: '方案名称的长度在3-30字之间!'
+                        },
+                        regexp: {
+                            regexp: /^([a-zA-Z0-9_]|[\u4e00-\u9fa5])+$/,
+                            message: '方案名称只能有字母,汉字,数字和下划线组成!'
+                        }
+                    }
+                },
+                plandesc: {
+                    validators: {
+                        notEmpty: {
+                            message: '方案描述不能为空!'
+                        }
+                    }
+                },
+                deptnumber: {
+                    validators: {
+                        notEmpty: {
+                            message: '爬取深度不能为空!'
+                        },
+                        lessThan: {
+                            value: 5,
+                            inclusive: true,
+                            message: '爬取深度要小于等于5层;'
+                        },
+                        greaterThan: {
+                            value: 1,
+                            inclusive: false,
+                            message: '爬取深度要大于等于2层'
+                        }
+                    }
+                },
+                topn: {
+                    validators: {
+                        notEmpty: {
+                            message: '每层最大爬取数不能为空!'
+                        },
+                        lessThan: {
+                            value: 100001,
+                            inclusive: true,
+                            message: '每层最大爬取数要小于等于10萬'
+                        },
+                        greaterThan: {
+                            value: 999,
+                            inclusive: false,
+                            message: '每层最大爬取数要大于等于1仟'
+                        }
+                    }
+                },
+                isresumable: {
+                    validators: {
+                        notEmpty: {
+                            message: '断点爬取选择不能为空!'
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+    function  setupPlanForm( planid ) {
+        $.ajax({
+            url:'/crawl/plan/getPlanById?planid='+ planid,
+            async:false,
+            success:function(data){
+                $("input[role='planid']").val(data.planid);
+                $("#planid").val(data.planid);
+                $("input[role='planname']").val(data.planname);
+                $("textarea[role='plandesc']").val(data.plandesc);
+                $("input[role='elementcode']").val(data.elementcode);
+                $("input[role='deptnumber']").val(data.deptnumber);
+                $("input[role='topn']").val(data.topn);
+                $("input[role='isresumable']").val(data.isresumable);
+            }
+        });
+    }
+</script>
+</body>
+</html>

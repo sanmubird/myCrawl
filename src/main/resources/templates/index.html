@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>三目鸟首页</title>
+    <script type="text/javascript" src="/static/common/boot/bootLite.js"></script>
+    <style type="text/css">
+        .logo{
+            position: absolute;
+            margin-left: 10%;
+        }
+        .sign-up {
+            float: right;
+            margin-right: 10%;
+            margin-top: 9px;
+            padding-top: 7px;
+            width: 100px;
+            height: 50px;
+            border: 2px solid #F6B6AB;
+            border-radius: 25px;
+            -moz-border-radius: 25px;
+            -webkit-border-radius: 25px;
+            color: #EC6149;
+            font-size: 24px;
+        }
+
+        .login-in {
+            float: right;
+            margin-top: 9px;
+            padding-top: 10px;
+            width: 100px;
+            height: 50px;
+            color: #969696;
+            font-size: 24px;
+        }
+
+        a.sign-up:hover {
+            background-color: #FEF7F6;
+        }
+
+        .content{
+            margin:0 auto ;
+            text-align:center;
+            font-size: 24px;
+            color: black ;
+        }
+
+        .login{
+            float: right;
+            margin-right: 50px;
+            padding-top: 10px;
+            width: 200px;
+            height: 50px;
+            color: #969696;
+            font-size: 24px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<!-- 全局顶部导航栏 -->
+<nav class="navbar navbar-default navbar-fixed-top" style="height: 70px;background-color: #FFFFFF;" role="navigation">
+    <!-- 左上方 Logo -->
+    <a class="logo" href="/"><img src="/static/img/smb.png" alt="Nav logo" /></a>
+
+    <div role="unlogin">
+        <!-- 未登录显示登录/注册/写文章 -->
+        <a class="btn sign-up" href="/user/sign_up">注册</a>
+        <a class="btn login-in" href="/user/sign_in">登录</a>
+    </div>
+    <div role="login" class="login">
+        <ul class="nav nav-pills">
+            <li role="presentation" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" id="userLogo" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    Dropdown <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="/user/usercenter">前往我的主页</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="/user/loginout">注销</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="jumbotron">
+    <div class="content">
+        <br/>
+        <br/>
+        　　<h1>错误</h1>
+        　　<h2>郑愁予</h2>
+        　　<p>我打江南走过</p>
+        　　<p>那等在季节里的容颜如莲花的开落</p>
+        　　<p>东风不来，三月的柳絮不飞</p>
+        　　<p>你底心如小小寂寞的城</p>
+        　　<p>恰若青石的街道向晚</p>
+        <br/>
+        　　<p>跫音不响，三月的春帷不揭</p>
+        　　<p>你底心是小小的窗扉紧掩</p>
+        　　<p>我达达的马蹄是美丽的错误</p>
+        　　<p>我不是归人，是个过客……</p>
+        <br/>
+    </div>
+</div>
+
+<script src="/static/user/js/index.js"></script>
+<script type="text/javascript">
+
+</script>
+</body>
+
+</html>

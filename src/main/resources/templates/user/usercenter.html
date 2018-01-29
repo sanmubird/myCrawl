@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人主页</title>
+    <script type="text/javascript" src="/static/common/boot/boot.js"></script>
+    <style>
+        .navbartop{
+            margin-top: 10px;
+        }
+
+        .operatebtn{
+            display: inline-block;
+            width: 30%;
+            margin: 0 auto;
+        }
+        .linkbtn{
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+<div role="navdiv">
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <input type="hidden" id="planid" value="" />
+            <input type="hidden" id="isfinished" value="true" />
+            <a class="logo" href="/"><img src="/static/img/smb.png" alt="Nav logo" /></a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbartop" >
+            <ul class="nav navbar-nav">
+                <li name="tab"  role="crawlrecord" class="active" >
+                    <a href="javascript:void(0);" role="crawlrecord" onclick="toggleActive(this)" ><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 查看爬取历史记录<span class="sr-only">(current)</span></a>
+                </li>
+                <li name="tab"  role="seealltask"  >
+                    <a href="javascript:void(0);" role="seealltask" onclick="toggleActive(this)" ><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 查看所有任务<span class="sr-only"></span></a>
+                </li>
+                <li name="tab"  role="addcrawltask" >
+                    <a href="javascript:void(0);" role="addcrawltask" onclick="toggleActive(this)"><span class="glyphicon glyphicon-plus"  aria-hidden="true"></span> 新建爬取任务</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" id="userLogo" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">个人昵称 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/user/updateinfo">修改个人资料</a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2760628554&site=qq&menu=yes">
+                                <img border="0" src="http://wpa.qq.com/pa?p=2:2760628554:51" alt="联系管理员" title="联系管理员"/>
+                            </a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="/user/loginout">注销</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+</div>
+
+<div role="contentdiv">
+
+</div>
+
+
+<script type="text/javascript">
+    function getUserinfo() {
+        var userinfo = {};
+        $.ajax({
+            url:'/user/sessionuserinfo',
+            async:false,
+            success:function(data){
+                userinfo = data ;
+            }
+        });
+        return userinfo;
+    }
+
+    /*切换活跃样式; 1:对样式的修改,2:对内容的修改 */
+    function toggleActive(obj){
+        var choosedTab = $(obj).attr("role");
+        if(choosedTab != "addcrawltask" ){
+            $("#planid").val("");
+        }
+        var activeClass = $("li[role='" + choosedTab + "']").attr("calss");
+        if(!activeClass){ /* 说明当前样式为空 , 那就要加上;*/
+            $("li[role='" + choosedTab + "']").addClass("active");
+        }
+        /*去掉另外不是选中的样式*/
+        $("li[role!='" + choosedTab + "']").removeClass("active");
+        loadConenteBodyByActiveTab();
+    }
+
+    function loadConenteBodyByActiveTab(){
+        var activeTab = $("li[class='active']").attr("role");
+        $("div[role='contentdiv']").load("/crawl/plan/"+activeTab);
+    }
+
+    $(function(){
+        var userinfo = getUserinfo();
+        if(userinfo.isnull == "false"){
+            $("#userLogo").html(userinfo.username);
+        }
+        loadConenteBodyByActiveTab();
+    });
+</script>
+</body>
+</html>

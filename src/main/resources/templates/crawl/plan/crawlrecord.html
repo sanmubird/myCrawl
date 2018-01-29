@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>crawlrecord</title>
+    <style>
+        .tablePanel{
+            width:80%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<div class="tab-pane tablePanel" >
+    <table id="table_record"></table>
+</div>
+<script type="text/javascript" src="/static/crawl/plan/crawlrecord.js"></script>
+<script type="text/javascript">
+    $(function(){
+        var oTableRecord = new TableRecord();
+        oTableRecord.Init();
+    });
+</script>
+</body>
+</html>

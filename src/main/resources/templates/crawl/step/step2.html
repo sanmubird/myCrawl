@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>step2</title>
+    <style>
+        .panelform{
+            width:80%;
+            height: 460px;
+            margin: 0 auto;
+        }
+        .fixed-table-container{
+            height: 298px;
+            padding-bottom: 0;
+        }
+        .fixed-table-body{
+            height: 95%;
+        }
+        .form-control {
+            height: 35px;
+        }
+
+        .form-control-feedback{
+            right: 25px;
+        }
+
+        .glyphicon-ok{
+            color:green;
+        }
+        .glyphicon-remove{
+            color:#A94442;
+        }
+        .seed{
+            margin: 0 auto ;
+        }
+        .modal-header{
+            background-color: #fff;
+        }
+
+        .leftbtn{
+            margin-top: 10px;
+            float: left;
+        }
+        .bootstrap-table{
+            height: 460px;
+        }
+
+    </style>
+</head>
+<body>
+<div  class="panelform">
+    <div class="container-fluid" >
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="tabbable" >
+                    <ul class="nav nav-tabs nav-justified">
+                        <li class="active">
+                            <a href="#panel-crawlseed" data-toggle="tab">设定爬取起始地址</a>
+                        </li>
+                        <li>
+                            <a href="#panel-regex" data-toggle="tab">设定爬取地址过滤规则</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="panel-crawlseed" >
+                            <a role="addseed"  data-trigger="modal" href="/crawl/seed/addSeed"   data-cssclass="seed modal-header" data-top="10%" data-width="80%" data-height=400 data-title="爬取起始地址" class="btn btn-success leftbtn">新增</a>
+                            <table id="tb_seed"></table>
+                        </div>
+                        <div class="tab-pane" id="panel-regex">
+                            <a role="addregex"  data-trigger="modal" href="/crawl/regex/addRegex"  data-cssclass="seed modal-header" data-top="10%" data-width="80%" data-height=400 data-title="爬取地址过滤规则" class="btn btn-success leftbtn">新增</a>
+                            <table id="tb_regex"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/static/crawl/step/step2-seed.js"></script>
+<script type="text/javascript" src="/static/crawl/step/step2-regex.js"></script>
+<script type="text/javascript">
+    var seedid = "" ,  regexid  = "";
+
+    $(function(){
+        var modal = $.scojs_modal({
+            keyboard: true
+        });
+        modal.show();
+        modal.close();
+        var oTableSeed = new TableSeed();
+        oTableSeed.Init();
+        var oTableRegex = new TableRegex();
+        oTableRegex.Init();
+    });
+
+    $("a[role='addseed']").scojs_modal({
+        onClose: function(){
+            $("#tb_seed").bootstrapTable('refresh');
+            seedid = "" ;
+        }
+    });
+    $("a[role='addregex']").scojs_modal({
+        onClose: function(){
+            $("#tb_regex").bootstrapTable('refresh');
+            regexid = "" ;
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>addRegex</title>
+    <style>
+        .form-control {
+            height: 35px;
+        }
+
+        .form-control-feedback{
+            right: 25px;
+        }
+
+        .glyphicon-ok{
+            color:green;
+        }
+        .glyphicon-remove{
+            color:#A94442;
+        }
+
+    </style>
+</head>
+<body>
+<div role="regex" >
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form class="form-horizontal"  action="/crawl/regex/saveRegex"  role="regex">
+                <fieldset>
+                    <div class="control-group" style="margin-top: 25px;">
+                        <!-- Text input-->
+                        <label class="col-sm-2 control-label">爬取地址过滤规则</label>
+                        <div class="col-sm-10">
+                            <input role="regexpath" name="regexpath" type="text" placeholder="请输入爬取地址过滤规则" class="form-control"/>
+                            <input role="planid4regex"  name="planid" type="hidden" />
+                            <input role="regexid"  name="regexid" type="hidden" />
+                        </div>
+                    </div>
+
+                    <div class="control-group" style="margin-top: 75px;">
+                        <!-- Textarea -->
+                        <label class="col-sm-2 control-label">爬取地址过滤规则描述</label>
+                        <div class="col-sm-10">
+                            <div class="textarea">
+                                <textarea name="regexpathdesc" role="regexpathdesc" class="form-control"> </textarea>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <div style="margin-top:20px;">
+                    <button id="submitBtn4regex" onclick="saveRegex()"  class="btn btn-success" style="display: inline-block;margin-left: 22%;" type="button" >保  存</button>
+                    <button type="button" class="btn" onclick="javascript: $('a.close').click();" style="display: inline-block;margin-left: 72%;margin-top: -56px;"    >取  消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("input[role = 'planid4regex']").val(  $("#planid").val() );
+        if(regexid != ""){
+            setupRegexForm(regexid);
+        }
+        $("form[role='regex']").bootstrapValidator({
+            /**
+             * 为每个字段指定通用错误提示语
+             */
+            message: '当前值验证不通过!',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                regexpathdesc: {
+                    validators: {
+                        notEmpty: {
+                            message: '爬取地址过滤规则描述不能为空!'
+                        }
+                    }
+                },
+                regexpath: {
+                    validators: {
+                        notEmpty: {
+                            message: '爬取地址过滤规则不能为空!'
+                        },
+                        uri: {
+                            allowLocal: true,
+                            message: '请输入正确的url地址!'
+                        }
+                    }
+                }
+            },
+            /**
+             *  指定不验证的情况
+             *  值可设置为以下三种类型：
+             *  1、String  ':disabled, :hidden, :not(:visible)'
+             *  2、Array  默认值  [':disabled', ':hidden', ':not(:visible)']
+             *  3、带回调函数
+             [':disabled', ':hidden', function($field, validator) {
+             $field 当前验证字段dom节点
+             validator 验证实例对象
+             可以再次自定义不要验证的规则
+             必须要return，return true or false;
+            return !$field.is(':visible');
+            }]
+             */
+            excluded: [':disabled', ':hidden', ':not(:visible)'],
+            /**
+             * 指定提交的按钮，例如：'.submitBtn' '#submitBtn'
+             * 当表单验证不通过时，该按钮为disabled
+             */
+            submitButtons: '#submitBtn4regex',
+            /**
+             * 生效规则（三选一）
+             * enabled 字段值有变化就触发验证
+             * disabled,submitted 当点击提交时验证并展示错误信息
+             */
+            live: 'enabled'
+            /**
+             * submitHandler: function(validator, form, submitButton) {
+            *   validator: 表单验证实例对象
+            *   form  jq对象  指定表单对象
+            *   指定表单对象submitButton  jq对象  指定提交按钮的对象
+            * }
+             * 在ajax提交表单时很实用
+             *   submitHandler: function(validator, form, submitButton) {
+                实用ajax提交表单
+                $.post(form.attr('action'), form.serialize(), function(result) {
+                   自定义回调逻辑
+                }, 'json');
+            }
+             *
+             */
+        });
+    });
+
+    function saveRegex() {
+        /*获取表单对象*/
+        var bootstrapValidator = $("form[role='regex']").data('bootstrapValidator');
+        /*手动触发验证*/
+        bootstrapValidator.validate();
+        if(bootstrapValidator.isValid()){
+           /* 表单提交的方法、比如ajax提交*/
+            $.post($("form[role='regex']").attr('action'), $("form[role='regex']").serialize(), function(result) {
+                if(result.isSaved == "ok"){
+                    $.scojs_message('保存爬取地址过滤规则成功!', $.scojs_message.TYPE_OK);
+                }else{
+                    $.scojs_message('保存爬取地址过滤规则失败!', $.scojs_message.TYPE_ERROR);
+                }
+            }, 'json');
+        }
+    }
+
+
+    function setupRegexForm(regexid) {
+        $.ajax({
+            url:'/crawl/regex/getRegexById?regexid='+regexid,
+            async:false,
+            success:function(data){
+                $("input[role='regexid']").val(data.regexid);
+                $("input[role='regexpath']").val(data.regexpath);
+                $("textarea[role='regexpathdesc']").val(data.regexpathdesc);
+            }
+        });
+    }
+</script>
+</body>
+
+</html>

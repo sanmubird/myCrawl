@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>newCrawlTask</title>
+    <style>
+        .step{
+            width: 500px;
+            margin: -10px auto 0 ;
+        }
+
+        .steptitle{
+            display: block;
+            margin-top: -80px;
+            margin-left: 10px;
+        }
+
+        .hrtop{
+            width: 16px;
+            margin-left: -7px;
+        }
+
+        hr{
+            display:inline-block;
+            width: 80px;
+            border-top:none;
+        }
+
+        .hr{
+            height:5px;
+            border:none;
+            border-top:5px ridge green;
+        }
+
+        .ultop{
+            margin-top:-13px;
+            margin-left: 30px;
+        }
+
+        .ulmid{
+            margin-top:-60px;
+            margin-left: 30px;
+        }
+
+        .ulbottom{
+            margin-top:-53px;
+            margin-left: 30px;
+        }
+
+        .li{
+            width: 46px;
+        }
+
+        .unactive{
+            color:gray;
+        }
+
+        i.active{
+            color:green;
+        }
+
+        .navdiv{
+            width:60%;
+            margin: 30px auto 0;
+        }
+    </style>
+</head>
+<body>
+<div role="stepdiv" class="step">
+    <ul class="list-inline ultop">
+        <li ><span style="margin-left: -22px;" class="steptitle">设定方案名称</span></li>
+        <hr class="hrtop"/>
+        <li ><span style="margin-left: 20px;"  class="steptitle">设定爬取地址</span></li>
+        <hr class="hrtop"/>
+        <li ><span style="margin-left: 16px;" class="steptitle">设定具体爬取目标</span></li>
+        <hr class="hrtop"/>
+        <li ><span style="margin-left: 16px;" class="steptitle">开始爬取</span></li>
+    </ul>
+    <ul class="list-inline ulmid">
+        <li role="step1" isok="1"><i class="fa fa-chevron-circle-right fa-3x active" aria-hidden="true"></i></li>
+        <hr/>
+        <li role="step2" isok="0"><i class="fa fa-chevron-circle-right fa-3x unactive"  aria-hidden="true"></i></li>
+        <hr/>
+        <li role="step3" isok="0"><i class="fa fa-chevron-circle-right fa-3x unactive"  aria-hidden="true"></i></li>
+        <hr/>
+        <li role="step4" isok="0"><i class="fa fa-chevron-circle-right fa-3x unactive"  aria-hidden="true"></i></li>
+    </ul>
+    <ul class="list-inline ulbottom">
+        <li class="li"></li>
+        <hr role="step2" class="hr"/>
+        <li class="li"></li>
+        <hr role="step3" class="hr"/>
+        <li class="li"></li>
+        <hr role="step4" class="hr"/>
+        <li class="li"></li>
+    </ul>
+</div>
+<div role="formdiv">
+
+</div>
+<div role="navdiv" class="navdiv">
+    <button type="button" role="prev" style="float: left;" onclick="gotoprev()" class="btn btn-success">到上一步</button>
+    <button type="button" role="save" style="display: table;width: auto;margin: 0 auto -35px;" onclick="save()" class="btn btn-success">保存当前页</button>
+    <button type="button" role="next" style="float: right;" onclick="gotonext()" class="btn btn-success">到下一步</button>
+</div>
+
+
+<script src="/static/crawl/plan/addcrawltask.js"></script>
+<script type="text/javascript">
+
+</script>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>登陆三目鸟</title>
+    <script type="text/javascript" src="/static/common/boot/boot.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+            height: 100%;
+            background-color: #f1f1f1;
+        }
+
+        .sign {
+            height: 100%;
+            min-height: 750px;
+            text-align: center;
+            font-size: 14px;
+            background-color: #f1f1f1;
+        }
+
+        .sign .logo {
+            position: absolute;
+            top: 56px;
+            margin-left: 50px;
+        }
+
+        .sign .main {
+            width: 550px;
+            margin-top: 180px;
+            margin-left: 20px;
+            padding: 50px 50px 20px;
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, .1);
+            vertical-align: middle;
+            display: inline-block;
+        }
+
+        .main .title {
+            margin: 40px auto 50px;
+        }
+
+        h2 {
+            letter-spacing: 5px;
+        }
+
+        a {
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .title a:hover {
+            padding-bottom: 3px;
+            border-bottom: 3px solid #ea6f5a;
+        }
+
+        .active {
+            color: #ea6f5a;
+            padding-bottom: 3px;
+            border-bottom: 3px solid #ea6f5a;
+            font-weight: 700;
+        }
+
+        form {
+            margin: 30px auto;
+            width: 400px;
+            height: 300px;
+        }
+
+        .input-group,
+        .form-control {
+            height: 55px;
+        }
+
+        .sign .remember-btn {
+            float: left;
+            margin: 25px 0;
+        }
+
+        .sign .remember-btn span {
+            margin-left: 12px;
+            font-size: 22px;
+            color: #969696;
+            vertical-align: middle;
+        }
+
+        input[type=checkbox],
+        input[type=radio] {
+            margin: 4px 0 0;
+            width: 20px;
+            height: 20px;
+        }
+
+        .sign .forget-btn {
+            float: right;
+            position: relative;
+            margin: 25px 0;
+            font-size: 14px;
+        }
+
+        .sign .sign-in-button {
+            background: #3194d0;
+        }
+
+        .sign .sign-in-button,
+        .sign .sign-up-button {
+            margin-top: 80px;
+            width: 100%;
+            padding: 9px 18px;
+            font-size: 18px;
+            border: none;
+            border-radius: 25px;
+            color: #fff;
+            background: #42c02e;
+            cursor: pointer;
+            outline: none;
+            display: block;
+            clear: both;
+        }
+
+        .sign .forget-btn .dropdown-menu {
+            top: 30px;
+            left: auto;
+            right: 0;
+            border-radius: 4px;
+            z-index: 1000;
+        }
+
+        .open > .dropdown-menu {
+            display: block;
+        }
+
+        .sign .forget-btn .dropdown-menu a {
+            padding: 10px 20px;
+        }
+
+        .verifycode {
+            position: absolute;
+            top: 7px;
+            right: 3px;
+            z-index: 1000;
+        }
+
+        .alert {
+            position: absolute;
+            float: right;
+            top: 5px;
+            right: -220px;
+            height: 39px;
+            padding: 5px;
+            display: none;
+        }
+
+        .ok{
+            position: absolute;
+            float: right;
+            top: 10px;
+            right: -50px;
+            height: 39px;
+            padding: 5px;
+            display: none;
+        }
+
+        .content{
+            position: absolute;
+            margin-left: 80px;
+            margin-top: 150px;
+            text-align:left;
+            font-size: 24px;
+            color: black ;
+        }
+    </style>
+</head>
+
+<body>
+<div class="sign">
+    <div class="content">
+        <br/>
+        <br/>
+        <h1>断章</h1>
+        <h2>卞之琳</h2>
+        <br/>
+        <p>你站在桥上看风景，</p>
+        <p>看风景人在楼上看你。</p>
+        <p>明月装饰了你的窗子，</p>
+        <p>你装饰了别人的梦。</p>
+        <br/>
+    </div>
+    <div class="logo">
+        <a href="/"><img src="/static/img/smb.png" alt="Logo"/></a>
+    </div>
+    <div class="main">
+        <h2 class="title">
+            <div class="normal-title">
+                <a class="active" href="/user/sign_in">登录</a>
+                <b>·</b>
+                <a id="js-sign-up-btn" href="/user/sign_up">注册</a>
+            </div>
+        </h2>
+        <div>
+            <form  id = "userLoginForm"  >
+                <!-- 正常登录登录名输入框 -->
+                <div class="input-group">
+                    <span class="input-group-addon" ><i class="fa fa-user"   aria-hidden="true"></i></span>
+                    <input name="account" type="text" class="form-control" placeholder="手机号或邮箱" onblur="verifyAccount()" />
+                    <div class="alert alert-danger" isnull="0" role="account">手机号或邮箱不能为空!</div>
+                    <span class="ok" role="account" ><i class="fa fa-check-circle" style="color:green;" aria-hidden="true"></i></span>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"  ><i class="fa fa-lock"  aria-hidden="true"></i></span>
+                    <input name="password" type="password" class="form-control" placeholder="密码" onblur="verifyPassword()" />
+                    <div class="alert alert-danger" isnull="0" role="password">注意: 用户名不能为空!</div>
+                    <span class="ok" role="password" ><i class="fa fa-check-circle" style="color:green;" aria-hidden="true"></i></span>
+                </div>
+                <div class="remember-btn">
+                    <input type="checkbox" value="true" checked="checked" /><span>记住我</span>
+                </div>
+                <div class="forget-btn">
+                    <a data-toggle="dropdown">登录遇到问题?</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/users/password/mobile_reset">用手机号重置密码</a>
+                        </li>
+                        <li>
+                            <a href="/users/password/email_reset">用邮箱重置密码</a>
+                        </li>
+                    </ul>
+                </div>
+                <input type="button" onclick="login()" value="登录" class="sign-in-button" data-disable-with="登录"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">登陆结果:</h4>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/user/js/signin.js"></script>
+<script type="text/javascript">
+
+
+</script>
+</body>
+
+</html>
