@@ -22,6 +22,6 @@
     // var basePath=path.replace("/boot/","");
     document.write('<link rel="stylesheet" type="text/css" href="/static/common/bootstrap/css/bootstrap.min.css" >');
     document.write('<link rel="stylesheet" type="text/css" href="/static/common/bootstrap/css/bootstrap-theme.min.css" >');
-    document.write('<script type="text/javascript" src="/static/common/jquery/jquery-3.2.1.min.js"></script>');
-    document.write('<script type="text/javascript" src="/static/common/bootstrap/js/bootstrap.min.js"></script>');
+    //document.write('<script type="text/javascript" src="/static/common/jquery/jquery-3.2.1.min.js"></script>');
+    //document.write('<script type="text/javascript" src="/static/common/bootstrap/js/bootstrap.min.js"></script>');
 })();
