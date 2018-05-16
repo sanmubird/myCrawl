@@ -52,7 +52,7 @@ public class CrawlSeedController {
         int currPage = request.queryInt("offset", 0) / limit + 1;
 
         CrawlSeed crawlSeed = new CrawlSeed();
-        Page<CrawlSeed> seedPageData = crawlSeed.where("planid",planid).page(currPage, limit);
+        Page<CrawlSeed> seedPageData = crawlSeed.where("planid",planid).page(currPage, limit,"createtime desc");
 
         seedPageMap.put("total", seedPageData.getTotalRows() );// total键 存放总记录数，必须的
         seedPageMap.put("rows", seedPageData.getRows() );// rows键 存放每页记录 list

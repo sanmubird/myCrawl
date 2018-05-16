@@ -17,7 +17,7 @@ public class CrawlRecordService {
     public List<Map<String,Object>> getRecordPage(String userid  , int currPage , int limit){
 
         CrawlRecord crawlRecord = new CrawlRecord();
-        Page<CrawlRecord> crawlPageData = crawlRecord.where("userid",userid).page(currPage,limit);
+        Page<CrawlRecord> crawlPageData = crawlRecord.where("userid",userid).page(currPage,limit,"createtime desc");
 
         List<CrawlRecord> records = crawlPageData.getRows();
 

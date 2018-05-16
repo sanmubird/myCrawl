@@ -66,7 +66,7 @@ public class CrawlPlanController {
         if(planid != null ){
             crawlPlan.and("planid",planid);
         }
-        Page<CrawlPlan> seedPageData = crawlPlan.and("userid",request.session().attribute("userid")).page(currPage, limit);
+        Page<CrawlPlan> seedPageData = crawlPlan.and("userid",request.session().attribute("userid")).page(currPage, limit, "createtime desc");
         seedPageMap.put("total", seedPageData.getTotalRows() );// total键 存放总记录数，必须的
         seedPageMap.put("rows", seedPageData.getRows() );// rows键 存放每页记录 list
         return seedPageMap ;

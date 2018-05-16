@@ -59,7 +59,7 @@ public class CrawlElementController {
         int currPage = request.queryInt("offset", 0) / limit + 1;
 
         CrawlElement crawlElement = new CrawlElement();
-        Page<CrawlElement> seedPageData = crawlElement.where("planid",planid).page(currPage, limit);
+        Page<CrawlElement> seedPageData = crawlElement.where("planid",planid).page(currPage, limit,"createtime desc");
 
         seedPageMap.put("total", seedPageData.getTotalRows() );// total键 存放总记录数，必须的
         seedPageMap.put("rows", seedPageData.getRows() );// rows键 存放每页记录 list

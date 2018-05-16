@@ -24,9 +24,9 @@ public class ConnectionPool {
         props =  getProps();
         HikariConfig config = new HikariConfig();
         config.setDriverClassName(props.getProperty("driverClassName", "com.mysql.jdbc.Driver"));
-        config.setJdbcUrl(props.getProperty("jdbcUrl", "jdbc:mysql://180.76.233.12:3306/mycrawls?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull"));
+        config.setJdbcUrl(props.getProperty("jdbcUrl", "jdbc:mysql://180.76.233.12:3306/mycrawls?useUnicode=true&characterEncoding=utf-8&useSSL=false"));
         config.setUsername(props.getProperty("username", "root"));
-        config.setPassword(props.getProperty("password", "etoak"));
+        config.setPassword(props.getProperty("password", "sanmubird"));
         config.addDataSourceProperty("cachePrepStmts", props.getProperty("dataSource.cachePrepStmts", "true"));
         config.addDataSourceProperty("prepStmtCacheSize", props.getProperty("dataSource.prepStmtCacheSize", "250"));
         config.addDataSourceProperty("prepStmtCacheSqlLimit", props.getProperty("dataSource.prepStmtCacheSqlLimit", "2048"));
