@@ -82,12 +82,25 @@
                 </fieldset>
                 <div style="margin-top:20px;">
                     <button id="submitBtn4element" class="btn btn-success" onclick="saveElement()"  style="display: inline-block;margin-left: 22%;" type="button" >保  存</button>
-                    <button class="btn" style="display: inline-block;margin-left: 25%;margin-top: 2px;"  type="button" onclick="testElement()"  >测  试</button>
+                    <button name="test_btn" class="btn" style="display: inline-block;margin-left: 25%;margin-top: 2px;"  type="button" onclick="testElement()"  >测  试</button>
                     <a class="btn btn-link" style="display: inline-block;margin-left: 82%;margin-top: -56px;"   href="/crawl/step/easytour" target="_blank"  >教  程</a>
                 </div>
             </form>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop='static'>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel">提示</h4>
+			</div>
+			<div class="modal-body">
+				请稍候。。。
+			</div>
+		</div>
+	</div>
 </div>
 
 <script type="text/javascript">
@@ -246,9 +259,13 @@
         /*手动触发验证*/
         bootstrapValidator.validate();
         if(bootstrapValidator.isValid()){
+			$('#loading').modal('show');
+			$("button[name='test_btn']").attr("disabled", true);
             /* 表单提交的方法、比如ajax提交*/
             $.get('/crawl/element/testElement', $("form[role='element']").serialize(), function(result) {
+				$('#loading').modal('hide');
                 $.scojs_message(result.crawlresult, $.scojs_message.TYPE_OK);
+				$("button[name='test_btn']").attr("disabled", false);
             }, 'json');
         }
     }
